@@ -8,7 +8,7 @@ package serverrest;
  *
  * @author delfo
  */
-public class OperazioneResponse {
+public class OperazioneResponseV1 {
     private double operando1;
     private double operando2;
     private String operatore;
@@ -16,11 +16,11 @@ public class OperazioneResponse {
     private String operazione;
     
     // Costruttore vuoto necessario per GSON
-    public OperazioneResponse() {
+    public OperazioneResponseV1() {
     }
     
     // Costruttore con parametri
-    public OperazioneResponse(double operando1, double operando2, 
+    public OperazioneResponseV1(double operando1, double operando2, 
                              String operatore, double risultato) {
         this.operando1 = operando1;
         this.operando2 = operando2;

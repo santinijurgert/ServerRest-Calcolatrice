@@ -34,8 +34,8 @@ public class ServerRest {
             HttpServer server = HttpServer.create(new InetSocketAddress(porta), 0);
             
             // Crea istanze degli handler legacy da riutilizzare
-            PostHandler postHandler = new PostHandler();
-            GetHandler getHandler = new GetHandler();
+            PostHandlerV1 postHandler = new PostHandlerV1();
+            GetHandlerV1 getHandler = new GetHandlerV1();
             
             // Crea istanze degli handler V1 da riutilizzare
             PostHandlerV1 postHandlerV1 = new PostHandlerV1();
