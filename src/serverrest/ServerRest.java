@@ -33,9 +33,17 @@ public class ServerRest {
             // Crea il server sulla porta specificata
             HttpServer server = HttpServer.create(new InetSocketAddress(porta), 0);
             
-            // Registra gli handler per gli endpoint
-            server.createContext("/api/calcola/post", new PostHandler());
-            server.createContext("/api/calcola/get", new GetHandler());
+            // Crea istanze degli handler da riutilizzare
+            PostHandler postHandler = new PostHandler();
+            GetHandler getHandler = new GetHandler();
+            
+            // Registra gli handler per gli endpoint /api/calcola
+            server.createContext("/api/calcola/post", postHandler);
+            server.createContext("/api/calcola/get", getHandler);
+            
+            // Registra gli handler per gli endpoint /api/v1/calcola
+            server.createContext("/api/v1/calcola/post", postHandler);
+            server.createContext("/api/v1/calcola/get", getHandler);
             
             // Endpoint di benvenuto
             server.createContext("/", ServerRest::gestisciBenvenuto);
@@ -51,8 +59,10 @@ public class ServerRest {
             System.out.println("Porta: " + porta);
             System.out.println();
             System.out.println("Endpoint disponibili:");
-            System.out.println("  - POST: http://localhost:" + porta + "/api/calcola/post");
-            System.out.println("  - GET:  http://localhost:" + porta + "/api/calcola/get");
+            System.out.println("  - POST L: http://localhost:" + porta + "/api/calcola/post");
+            System.out.println("  - GET L:  http://localhost:" + porta + "/api/calcola/get");
+            System.out.println("  - POST V1: http://localhost:" + porta + "/api/v1/calcola/post");
+            System.out.println("  - GET V1:  http://localhost:" + porta + "/api/v1/calcola/get");
             System.out.println("  - Info: http://localhost:" + porta + "/");
             System.out.println();
             System.out.println("Operatori supportati:");
@@ -76,17 +86,19 @@ public class ServerRest {
     private static void gestisciBenvenuto(HttpExchange exchange) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         
-        Map info = new HashMap<>();
+        Map<String, Object> info = new HashMap<>();
         info.put("messaggio", "Benvenuto alla Calcolatrice REST API");
         info.put("versione", "2.0.0");
         info.put("tecnologia", "Java + GSON");
         
-        Map endpoints = new HashMap<>();
-        endpoints.put("POST", "/api/calcola/post");
-        endpoints.put("GET", "/api/calcola/get?operando1=X&operando2=Y&operatore=OP");
+        Map<String, String> endpoints = new HashMap<>();
+        endpoints.put("POST_v1", "/api/calcola/post");
+        endpoints.put("GET_v1", "/api/calcola/get?operando1=X&operando2=Y&operatore=OP");
+        endpoints.put("POST_v2", "/api/v1/calcola/post");
+        endpoints.put("GET_v2", "/api/v1/calcola/get?operando1=X&operando2=Y&operatore=OP");
         info.put("endpoints", endpoints);
         
-        Map operatori = new HashMap<>();
+        Map<String, String> operatori = new HashMap<>();
         operatori.put("somma", "SOMMA o +");
         operatori.put("sottrazione", "SOTTRAZIONE o -");
         operatori.put("moltiplicazione", "MOLTIPLICAZIONE o * o X");
