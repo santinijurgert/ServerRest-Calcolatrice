@@ -33,17 +33,21 @@ public class ServerRest {
             // Crea il server sulla porta specificata
             HttpServer server = HttpServer.create(new InetSocketAddress(porta), 0);
             
-            // Crea istanze degli handler da riutilizzare
+            // Crea istanze degli handler legacy da riutilizzare
             PostHandler postHandler = new PostHandler();
             GetHandler getHandler = new GetHandler();
+            
+            // Crea istanze degli handler V1 da riutilizzare
+            PostHandlerV1 postHandlerV1 = new PostHandlerV1();
+            GetHandlerV1 getHandlerV1 = new GetHandlerV1();
             
             // Registra gli handler per gli endpoint /api/calcola
             server.createContext("/api/calcola/post", postHandler);
             server.createContext("/api/calcola/get", getHandler);
             
             // Registra gli handler per gli endpoint /api/v1/calcola
-            server.createContext("/api/v1/calcola/post", postHandler);
-            server.createContext("/api/v1/calcola/get", getHandler);
+            server.createContext("/api/v1/calcola/post", postHandlerV1);
+            server.createContext("/api/v1/calcola/get", getHandlerV1);
             
             // Endpoint di benvenuto
             server.createContext("/", ServerRest::gestisciBenvenuto);
