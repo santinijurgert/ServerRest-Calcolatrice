@@ -18,10 +18,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * Handler per richieste GET API v2
+ * Supporta operazioni avanzate: POTENZA, MODULO, RADICE
+ * 
  * @author delfo
  */
-public class GetHandlerV1 implements HttpHandler {
+public class GetHandlerV2 implements HttpHandler {
     
     // Istanza Gson configurata per pretty printing
     private final Gson gson = new GsonBuilder()
@@ -55,11 +57,11 @@ public class GetHandlerV1 implements HttpHandler {
             double operando2 = Double.parseDouble(parametri.get("operando2"));
             String operatore = parametri.get("operatore");
             
-            // Esegue il calcolo
-            double risultato = CalcolatriceServiceV1.calcola(operando1, operando2, operatore);
+            // Esegue il calcolo con il service v2 (supporta operazioni avanzate)
+            double risultato = CalcolatriceServiceV2.calcola(operando1, operando2, operatore);
             
-            // Crea l'oggetto risposta
-            OperazioneResponseV1 response = new OperazioneResponseV1(
+            // Crea l'oggetto risposta v2 (con metadata automatici)
+            OperazioneResponseV2 response = new OperazioneResponseV2(
                 operando1,
                 operando2,
                 operatore,
@@ -69,7 +71,7 @@ public class GetHandlerV1 implements HttpHandler {
             // GSON converte automaticamente l'oggetto Java in JSON
             String jsonRisposta = gson.toJson(response);
             
-            inviaRisposta(exchange, 200, jsonRisposta);
+            inviaRisposta(exchange, 200, jsonRisposta, response.getRequest_id());
             
         } catch (NumberFormatException e) {
             inviaErrore(exchange, 400, "Operandi non validi. Devono essere numeri");
@@ -108,33 +110,46 @@ public class GetHandlerV1 implements HttpHandler {
     }
     
     /**
-     * Invia una risposta di successo
+     * Invia una risposta di successo con header v2
      */
-    private void inviaRisposta(HttpExchange exchange, int codice, String jsonRisposta) 
+    private void inviaRisposta(HttpExchange exchange, int codice, String jsonRisposta, String requestId) 
             throws IOException {
         
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+        exchange.getResponseHeaders().set("API-Version", "2.0");
+        exchange.getResponseHeaders().set("X-Request-ID", requestId);
         
         byte[] bytes = jsonRisposta.getBytes(StandardCharsets.UTF_8);
         exchange.sendResponseHeaders(codice, bytes.length);
         
-        try (OutputStream os = exchange.getResponseBody()) {
-            os.write(bytes);
-        }
+        OutputStream os = exchange.getResponseBody();
+        os.write(bytes);
+        os.close();
     }
     
     /**
-     * Invia una risposta di errore in formato JSON
+     * Invia una risposta di errore
      */
     private void inviaErrore(HttpExchange exchange, int codice, String messaggio) 
             throws IOException {
         
         Map<String, Object> errore = new HashMap<>();
         errore.put("errore", messaggio);
-        errore.put("status", codice);
+        errore.put("codice", codice);
+        errore.put("versione_api", "2.0");
         
         String jsonErrore = gson.toJson(errore);
-        inviaRisposta(exchange, codice, jsonErrore);
+        
+        exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
+        exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
+        exchange.getResponseHeaders().set("API-Version", "2.0");
+        
+        byte[] bytes = jsonErrore.getBytes(StandardCharsets.UTF_8);
+        exchange.sendResponseHeaders(codice, bytes.length);
+        
+        OutputStream os = exchange.getResponseBody();
+        os.write(bytes);
+        os.close();
     }
 }

@@ -41,6 +41,10 @@ public class ServerRest {
             PostHandlerV1 postHandlerV1 = new PostHandlerV1();
             GetHandlerV1 getHandlerV1 = new GetHandlerV1();
             
+            // Crea istanze degli handler V2
+            PostHandlerV2 postHandlerV2 = new PostHandlerV2();
+            GetHandlerV2 getHandlerV2 = new GetHandlerV2();
+            
             // Registra gli handler per gli endpoint /api/calcola
             server.createContext("/api/calcola/post", postHandler);
             server.createContext("/api/calcola/get", getHandler);
@@ -48,6 +52,10 @@ public class ServerRest {
             // Registra gli handler per gli endpoint /api/v1/calcola
             server.createContext("/api/v1/calcola/post", postHandlerV1);
             server.createContext("/api/v1/calcola/get", getHandlerV1);
+            
+            // Registra gli handler per gli endpoint /api/v2/calcola
+            server.createContext("/api/v2/calcola/post", postHandlerV2);
+            server.createContext("/api/v2/calcola/get", getHandlerV2);
             
             // Endpoint di benvenuto
             server.createContext("/", ServerRest::gestisciBenvenuto);
@@ -63,15 +71,17 @@ public class ServerRest {
             System.out.println("Porta: " + porta);
             System.out.println();
             System.out.println("Endpoint disponibili:");
-            System.out.println("  - POST L: http://localhost:" + porta + "/api/calcola/post");
-            System.out.println("  - GET L:  http://localhost:" + porta + "/api/calcola/get");
             System.out.println("  - POST V1: http://localhost:" + porta + "/api/v1/calcola/post");
             System.out.println("  - GET V1:  http://localhost:" + porta + "/api/v1/calcola/get");
+            System.out.println("  - POST V2: http://localhost:" + porta + "/api/v2/calcola/post");
+            System.out.println("  - GET V2:  http://localhost:" + porta + "/api/v2/calcola/get");
             System.out.println("  - Info: http://localhost:" + porta + "/");
             System.out.println();
             System.out.println("Operatori supportati:");
-            System.out.println("  SOMMA, SOTTRAZIONE, MOLTIPLICAZIONE, DIVISIONE");
+            System.out.println("  V1: SOMMA, SOTTRAZIONE, MOLTIPLICAZIONE, DIVISIONE");
+            System.out.println("  V2: V1 + POTENZA, MODULO, RADICE");
             System.out.println();
+
             System.out.println("Premi Ctrl+C per fermare il server");
             System.out.println("==============================================");
             

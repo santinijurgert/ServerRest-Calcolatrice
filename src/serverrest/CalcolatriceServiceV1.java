@@ -30,31 +30,27 @@ public class CalcolatriceServiceV1 {
         String op = operatore.toUpperCase().trim();
         
         switch (op) {
-            case "SOMMA":
-            case "+":
+            case "SOMMA", "+" -> {
                 return operando1 + operando2;
-                
-            case "SOTTRAZIONE":
-            case "-":
+            }
+            case "SOTTRAZIONE", "-" -> {
                 return operando1 - operando2;
+            }
                 
-            case "MOLTIPLICAZIONE":
-            case "*":
-            case "X":
+            case "MOLTIPLICAZIONE", "*", "X" -> {
                 return operando1 * operando2;
-                
-            case "DIVISIONE":
-            case "/":
+            }
+            case "DIVISIONE", "/" -> {
                 if (operando2 == 0) {
                     throw new IllegalArgumentException("Divisione per zero non consentita");
                 }
                 return operando1 / operando2;
+            }
                 
-            default:
-                throw new IllegalArgumentException(
-                    "Operatore non valido: " + operatore + 
-                    ". Operatori consentiti: SOMMA, SOTTRAZIONE, MOLTIPLICAZIONE, DIVISIONE"
-                );
+            default -> throw new IllegalArgumentException(
+                    "Operatore non valido: " + operatore +
+                            ". Operatori consentiti: SOMMA, SOTTRAZIONE, MOLTIPLICAZIONE, DIVISIONE"
+            );
         }
     }
 }

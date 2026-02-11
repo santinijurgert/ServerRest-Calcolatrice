@@ -2,6 +2,17 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/App.java</file>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/ServerRest.java</file>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/CalcolatriceServiceV2.java</file>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/CalcolatriceServiceV1.java</file>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/GetHandlerV2.java</file>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/GetHandlerV1.java</file>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/OperazioneResponseV2.java</file>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/PostHandlerV2.java</file>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/OperazioneResponseV1.java</file>
+            <file>file:/C:/Users/santini.juri/Documents/GitHub/ServerRest-Calcolatrice/src/serverrest/PostHandlerV1.java</file>
+        </group>
     </open-files>
 </project-private>
