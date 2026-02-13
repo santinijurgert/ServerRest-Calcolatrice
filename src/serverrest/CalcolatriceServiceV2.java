@@ -32,7 +32,7 @@ public class CalcolatriceServiceV2 extends CalcolatriceServiceV1 {
         return switch (op) {
             case "POTENZA", "POW", "^" -> potenza(operando1, operando2);
             case "MODULO", "MOD", "%" -> modulo(operando1, operando2);
-            case "RADICE", "SQRT", "ROOT" -> radice(operando1, operando2);
+            case "RADICE", "SQRT", "ROOT" -> radice(operando1, operando2 /*Operando2 è l'indice*/);
             default -> CalcolatriceServiceV1.calcola(operando1, operando2, operatore);
         }; // Riusa le operazioni base della classe padre (v1)
     }
