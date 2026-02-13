@@ -6,7 +6,7 @@ package serverrest;
 
 /**
  *
- * @author delfo
+ * @author jurgert
  */
 public class OperazioneRequestV3 {
     private double valore;
