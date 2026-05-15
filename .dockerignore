@@ -11,7 +11,6 @@ dist/
 *.iml
 *.iws
 *.ipr
-nbproject/
 *.swp
 *.swo
 *~
@@ -23,7 +22,6 @@ Thumbs.db
 .env.local
 
 # Dependencies
-lib/
 target/
 node_modules/
 
@@ -35,4 +33,3 @@ node_modules/
 
 # Docker specific
 .dockerignore
-Dockerfile
