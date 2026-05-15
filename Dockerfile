@@ -8,7 +8,9 @@ COPY build.xml .
 COPY manifest.mf .
 COPY nbproject/ ./nbproject/
 COPY src/ ./src/
-COPY lib/ ./lib/ || true
+
+# Copy lib if it exists, otherwise continue
+RUN if [ -d lib ]; then cp -r lib /app/lib; fi || true
 
 # Build the project using Ant (as per build.xml)
 RUN apt-get update && apt-get install -y ant && rm -rf /var/lib/apt/lists/*
