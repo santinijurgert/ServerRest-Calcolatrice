@@ -1,5 +1,5 @@
 # Stage 1: Build
-FROM maven:3.9-eclipse-temurin-17 as builder
+FROM maven:3.9-eclipse-temurin-17 AS builder
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ COPY build.xml .
 COPY manifest.mf .
 COPY nbproject/ ./nbproject/
 COPY src/ ./src/
-COPY lib/ ./lib/
+COPY lib/ ./lib/ || true
 
 # Build the project using Ant (as per build.xml)
 RUN apt-get update && apt-get install -y ant && rm -rf /var/lib/apt/lists/*
